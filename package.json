@@ -1,22 +1,38 @@
 {
-    "name": "myassignment-1",
-    "version": "0.0.0",
-    "private": true,
-    "scripts": {
-      "start": "node ./server.js"
-    },
-    "dependencies": {
-      "@fortawesome/fontawesome-free": "^5.15.0",
-      "bootstrap": "^4.5.2",
-      "cookie-parser": "~1.4.4",
-      "debug": "~2.6.9",
-      "ejs": "~2.6.1",
-      "express": "~4.16.1",
-      "font-awesome": "^4.7.0",
-      "http-errors": "~1.6.3",
-      "jquery": "^3.5.1",
-      "morgan": "~1.9.1",
-      "popper.js": "^1.16.1"
-    }
-  }
-  
+  "name": "myassignment-1",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./server.js"
+  },
+  "engines": {
+    "node": "^12.00.0",
+    "npm": "6.0.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.0",
+    "bootstrap": "^4.5.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "font-awesome": "^4.7.0",
+    "http-errors": "~1.6.3",
+    "jquery": "^3.5.1",
+    "morgan": "~1.9.1",
+    "popper.js": "^1.16.1"
+  },
+  "description": "app for COMP229",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/301019618/Express-Portfolio.git"
+  },
+  "author": "Saaimatul Huq",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/301019618/Express-Portfolio/issues"
+  },
+  "homepage": "https://github.com/301019618/Express-Portfolio#readme"
+}
