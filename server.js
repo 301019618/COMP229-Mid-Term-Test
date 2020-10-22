@@ -2,8 +2,8 @@
  * Module dependencies.
  */
 
-var app = require('./app');
-var debug = require('debug')('COMP229-assignment-1:server');
+var app = require('./server/config/app');
+var debug = require('debug')('COMP229-assignment-2:server');
 var http = require('http');
 
 /**

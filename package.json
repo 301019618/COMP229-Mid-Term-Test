@@ -1,5 +1,5 @@
 {
-  "name": "myassignment-1",
+  "name": "myassignment-2",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
     "font-awesome": "^4.7.0",
     "http-errors": "~1.6.3",
     "jquery": "^3.5.1",
+    "mongoose": "^5.10.9",
     "morgan": "~1.9.1",
     "popper.js": "^1.16.1"
   },
@@ -27,12 +28,13 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/301019618/Express-Portfolio.git"
+    "url": "git+https://github.com/301019618/ExpressPortfolio.git"
+    
   },
   "author": "Saaimatul Huq",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/301019618/Express-Portfolio/issues"
+    "url": "https://github.com/301019618/ExpressPortfolio/issues"
   },
-  "homepage": "https://github.com/301019618/Express-Portfolio#readme"
+  "homepage": "https://github.com/301019618/ExpressPortfolio#readme"
 }
