@@ -3,8 +3,8 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 //connect to our Book Model
-var Book = require('../server/models/book');
-
+var Book = require('../models/book');
+//var Book = require('../server/models/book');
 var bookController = require('../controllers/book');
 
 /*GET Route for the Book List page - READ Operation */
