@@ -95,7 +95,7 @@ module.exports.processRegisterPage = (req, res, next) => {
         displayName: req.body.displayName
     });
 
-    User.register(newUser, req.body.passsword, (user) => {
+    User.register(newUser, req.body.passsword, (err) => {
         if(err)
         {
             console.log("Error: Inserting New User");
