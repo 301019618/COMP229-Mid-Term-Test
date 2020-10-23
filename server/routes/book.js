@@ -2,29 +2,38 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
-//connect to our Book Model
-var Book = require('../models/book');
+var passport = require('passport');
+
 //var Book = require('../server/models/book');
 var bookController = require('../controllers/book');
+
+// helper function for guard purposes
+function requireAuth(req, res, next)
+{
+    // check if the user is logged in
+    if(!req.isAuthenticated())
+    {
+        return res.redirect('/login');
+    }
+    next();
+}
 
 /*GET Route for the Book List page - READ Operation */
 router.get('/', bookController.displayBookList);
 
-
 /*GET Route for displaying the Add page - CREATE Operation */
-router.get('/add', bookController.displayAddPage);
+router.get('/add', requireAuth, bookController.displayAddPage);
 
 /*POST Route for processing the Add page - CREATE Operation */
-router.post('/add', bookController.processAddPage);
-
+router.post('/add', requireAuth, bookController.processAddPage);
 
 /*GET Route for displaying the Edit page - UPDATE Operation */
-router.get('/edit/:id', bookController.displayEditPage);
+router.get('/edit/:id', requireAuth, bookController.displayEditPage);
 
 /*POST Route for processing the Edit page - UPDATE Operation */
-router.post('/edit/:id', bookController.processEditPage);
+router.post('/edit/:id', requireAuth, bookController.processEditPage);
 
 /*GET to perform Deletion - DELETE Operation */
-router.get('/delete/:id',bookController.performDelete);
+router.get('/delete/:id', requireAuth, bookController.performDelete);
 
 module.exports = router;
