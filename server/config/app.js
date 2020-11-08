@@ -1,100 +1,46 @@
-// installed 3rd party packages
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
+// moddules for node and express
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
 
-// modules for authentication
-var session = require('express-session');
-var passport = require('passport');
+// import "mongoose" - required for DB Access
+let mongoose = require('mongoose');
+// URI
+let DB = require('./db');
 
-var passportJWT = require('passport-jwt');
-var JWTStrategy = passportJWT.Strategy;
-var ExtractJWT = passportJWT.ExtractJwt;
+mongoose.connect(process.env.URI || DB.URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
-var passportLocal = require('passport-local');
-var localStrategy = passportLocal.Strategy;
-var flash = require('connect-flash');
-
-// database setup
-var mongoose = require('mongoose');
-var DB = require('./db');
-
-// point mongoose to the DB URI
-mongoose.connect(DB.URI, {useNewUrlParser: true, useUnifiedTopology: true});
-
-var mongoDB = mongoose.connection;
+let mongoDB = mongoose.connection;
 mongoDB.on('error', console.error.bind(console, 'Connection Error:'));
-mongoDB.once('open', ()=>{
-  console.log('Connected to MongoDB...');
+mongoDB.once('open', ()=> {
+  console.log("Connected to MongoDB...");
 });
 
-var indexRouter = require('../routes/index');
-var usersRouter = require('../routes/users');
-var booksRouter = require('../routes/book');
 
-var app = express();
+// define routers
+let index = require('../routes/index'); // top level routes
+let books = require('../routes/books'); // routes for books
+
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, '../views'));
-app.set('view engine', 'ejs'); // express  -e
+app.set('view engine', 'ejs');
 
+// uncomment after placing your favicon in /client
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../../public')));
-app.use(express.static(path.join(__dirname, '../../node_modules')));
+app.use(express.static(path.join(__dirname, '../../client')));
 
-//setup express session
-app.use(session({
-  secret: "SomeSecret",
-  saveUninitialized: false,
-  resave: false
-}));
 
-// initialize flash
-app.use(flash());
+// route redirects
+app.use('/', index);
+app.use('/books', books);
 
-// initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-// passport user configuration
-
-// create a User Model Instance
-var userModel = require('../models/user');
-var User = userModel.User;
-
-// implement a User Authentication Strategy
-passport.use(User.createStrategy());
-
-// serialize and deserialize the User info
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-var jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();
-jwtOptions.secretOrKey = DB.Secret;
-
-var strategy = new JWTStrategy(jwtOptions, (jwt_payload, done) => {
-  User.findById(jwt_payload.id)
-    .then(user => {
-      return done(null, user);
-    })
-    .catch(err => {
-      return done(err, false);
-    });
-});
-
-passport.use(strategy);
-
-// routing
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/book-list', booksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -109,7 +55,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error', { title: 'Error'});
+  res.render('error');
 });
 
 module.exports = app;
